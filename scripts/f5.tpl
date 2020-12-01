@@ -64,6 +64,9 @@ tmos_declared:
               addressDiscovery: consul
               updateInterval: 5
               uri: http://${consul_private_ip}:8500/v1/catalog/service/nginx
+  post_onboard_enabled: true
+  post_onboard_commands:
+    - "echo 'curl -s http://monitors.internal.local/rebooted' >> /config/startup"
   # post_onboard_enabled: true
   # post_onboard_commands:
   #   - /config/custom-config.sh
