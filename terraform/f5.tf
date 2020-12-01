@@ -13,6 +13,13 @@ data "aws_ami" "f5_ami" {
   }
 }
 
+resource "aws_eip" "f5" {
+  instance = aws_instance.f5.id
+  vpc      = true
+
+  tags = merge(local.common_tags, { Name = "${random_pet.name.id}-f5_public_ip" })
+}
+
 resource "aws_instance" "f5" {
   # private_ip                  = "10.0.0.200"
   ami                         = data.aws_ami.f5_ami.id
@@ -52,7 +59,7 @@ data "template_file" "f5" {
 
   vars = {
     password = random_string.password.result
-    f5_public_ip = aws_instance.f5.public_ip
+    f5_public_ip = aws_eip.f5.public_ip
     consul_private_ip = aws_instance.consul.private_ip
     # s3_bucket = aws_s3_bucket.s3_bucket.id
     s3_bucket = "bla"

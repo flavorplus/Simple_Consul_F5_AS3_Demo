@@ -1,5 +1,5 @@
 output "F5_Password" {
-  value = "${random_string.password.result}"
+  value = random_string.password.result
 }
 
 output "F5_UI" {
