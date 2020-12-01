@@ -7,7 +7,7 @@ local_ipv4="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
 sudo apt-get install unzip
 
 #Download Consul
-CONSUL_VERSION="1.9.0-beta1"
+CONSUL_VERSION="1.9.0"
 curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
 
 #Install Consul
@@ -58,7 +58,7 @@ EOF
 
 cat << EOF > /etc/consul.d/client.hcl
 advertise_addr = "${local_ipv4}"
-retry_join = ["provider=aws tag_key=Env tag_value=consul"]
+retry_join = ["provider=aws tag_key=consul tag_value=true"]
 EOF
 
 cat << EOF > /etc/consul.d/nginx.json
@@ -86,7 +86,7 @@ sudo service consul status
 
 #Install Dockers
 sudo snap install docker
-sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 #Run  nginx

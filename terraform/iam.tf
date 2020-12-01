@@ -1,6 +1,6 @@
-resource "aws_iam_role_policy" "consul" {
-  name = "${var.prefix}-f5-consul-policy"
-  role = aws_iam_role.consul.id
+resource "aws_iam_role_policy" "server" {
+  name = "server-${random_pet.name.id}"
+  role = aws_iam_role.server.id
 
   policy = <<EOF
 {
@@ -20,8 +20,10 @@ resource "aws_iam_role_policy" "consul" {
 EOF
 }
 
-resource "aws_iam_role" "consul" {
-  name = "${var.prefix}-f5-consul-role"
+resource "aws_iam_role" "server" {
+  name = "server-${random_pet.name.id}"
+
+  tags = merge(local.common_tags, {Name = "${random_pet.name.id}-server_role"})
 
   assume_role_policy = <<EOF
 {
@@ -40,53 +42,55 @@ resource "aws_iam_role" "consul" {
 EOF
 }
 
-resource "aws_iam_instance_profile" "consul" {
-  name = "${var.prefix}-consul_sd"
-  role = aws_iam_role.consul.name
+resource "aws_iam_instance_profile" "server" {
+  name = "server-${random_pet.name.id}"
+  role = aws_iam_role.server.name
 }
 
-resource "aws_iam_role_policy" "bigip" {
-  name = "${var.prefix}-f5-bigip-policy"
-  role = aws_iam_role.bigip.id
+# resource "aws_iam_role_policy" "f5" {
+#   name = "f5-${random_pet.name.id}"
+#   role = aws_iam_role.f5.id
 
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "s3:GetObject",
-        "s3:DeleteObject"	
-      ],
-      "Effect": "Allow",
-      "Resource": "arn:aws:s3:::${aws_s3_bucket.s3_bucket.id}/admin.shadow"
-    }
-  ]
-}
-EOF
-}
+#   policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": [
+#         "s3:GetObject",
+#         "s3:DeleteObject"	
+#       ],
+#       "Effect": "Allow",
+#       "Resource": "arn:aws:s3:::${aws_s3_bucket.default.id}/admin.shadow"
+#     }
+#   ]
+# }
+# EOF
+# }
 
-resource "aws_iam_role" "bigip" {
-  name = "${var.prefix}-f5-bigip-role"
+# resource "aws_iam_role" "f5" {
+#   name = "f5-${random_pet.name.id}"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
+#   tags = merge(local.common_tags, {Name = "${random_pet.name.id}-f5_role"})
 
-resource "aws_iam_instance_profile" "bigip" {
-  name = "${var.prefix}-bigip"
-  role = aws_iam_role.bigip.name
-}
+#   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": "sts:AssumeRole",
+#       "Principal": {
+#         "Service": "ec2.amazonaws.com"
+#       },
+#       "Effect": "Allow",
+#       "Sid": ""
+#     }
+#   ]
+# }
+# EOF
+# }
+
+# resource "aws_iam_instance_profile" "f5" {
+#   name = "f5-${random_pet.name.id}"
+#   role = aws_iam_role.f5.name
+# }
