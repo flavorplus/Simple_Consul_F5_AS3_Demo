@@ -3,7 +3,7 @@ output "F5_Password" {
 }
 
 output "F5_UI" {
-  value = "https://${aws_instance.f5.public_ip}:8443"
+  value = "https://${aws_eip.f5.public_ip}:8443"
 }
 
 output "Consul_UI" {
@@ -11,5 +11,5 @@ output "Consul_UI" {
 }
 
 output "F5_service" {
-  value = "http://${aws_instance.f5.public_ip}:8080"
+  value = "http://${aws_eip.f5.public_ip}:8080"
 }
