@@ -14,10 +14,13 @@ data "aws_ami" "f5_ami" {
 }
 
 resource "aws_eip" "f5" {
-  instance = aws_instance.f5.id
   vpc      = true
-
   tags = merge(local.common_tags, { Name = "${random_pet.name.id}-f5_public_ip" })
+}
+
+resource "aws_eip_association" "f5" {
+  instance_id   = aws_instance.f5.id
+  allocation_id = aws_eip.f5.id
 }
 
 resource "aws_instance" "f5" {
