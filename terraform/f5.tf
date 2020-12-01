@@ -52,7 +52,10 @@ data "template_file" "f5" {
 
   vars = {
     password = random_string.password.result
+    f5_public_ip = aws_instance.f5.public_ip
+    consul_private_ip = aws_instance.consul.private_ip
     # s3_bucket = aws_s3_bucket.s3_bucket.id
+    s3_bucket = "bla"
   }
 }
 
