@@ -69,7 +69,7 @@ extension_services:
                 class: Service_HTTP
                 virtualPort: 8080
                 virtualAddresses:
-                  - "${local_ipv4}"
+                  - "$${local_ipv4}"
                 pool: web_pool
                 persistenceMethods: []
                 profileMultiplex:
