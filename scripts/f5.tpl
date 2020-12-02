@@ -85,9 +85,6 @@ extension_services:
                     jmesPathQuery: "[*].{id:Node.Address,ip:{private:Node.Address,public:Node.Address},port:Service.Port}"
 EOF
 
-source /usr/lib/bigstart/bigip-ready-functions
-wait_bigip_ready
-
 for i in {1..30}; do
     curl -fv --retry 1 --connect-timeout 5 -L "https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v1.1.0/dist/f5-bigip-runtime-init-1.1.0-1.gz.run" -o "/var/config/rest/downloads/f5-bigip-runtime-init-1.1.0-1.gz.run" && break || sleep 10
 done
