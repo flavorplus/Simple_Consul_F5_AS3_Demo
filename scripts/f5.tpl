@@ -76,8 +76,8 @@ extension_services:
                   - servicePort: 80
                     addressDiscovery: consul
                     updateInterval: 5
-                    uri: http://${consul_private_ip}:8500/v1/catalog/service/nginx?passing
-                    jmesPathQuery: "[*].{id:Node.Address,ip:{private:Node.Address,public:Node.Address},port:Service.Port}"
+                    uri: http://${consul_private_ip}:8500/v1/health/service/nginx?passing
+                    jmesPathQuery: [*].{id:Node.Address,ip:{private:Node.Address,public:Node.Address},port:Service.Port}
 EOF
 
 source /usr/lib/bigstart/bigip-ready-functions
