@@ -1,11 +1,10 @@
 #!/bin/bash
 
 #Get IP
-local_ipv4="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
+LOCAL_IP="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
 
 mkdir -p /config/cloud
-cat << 'EOF' > /config/cloud/runtime-init-conf.yaml
----
+cat << EOF > /config/cloud/runtime-init-conf.yaml
 runtime_parameters: []
 pre_onboard_enabled:
   - name: provision_rest
@@ -69,7 +68,7 @@ extension_services:
                 class: Service_HTTP
                 virtualPort: 8080
                 virtualAddresses:
-                  - "$${local_ipv4}"
+                  - "$LOCAL_IP"
                 pool: web_pool
                 persistenceMethods: []
                 profileMultiplex:
