@@ -9,7 +9,7 @@ data "aws_ami" "f5_ami" {
 
   filter {
     name   = "name"
-    values = ["F5 BIGIP-15.1* PAYG-Good 25Mbps-*"]
+    values = ["F5 BIGIP-16.0* PAYG-Good 25Mbps-*"]
   }
 }
 

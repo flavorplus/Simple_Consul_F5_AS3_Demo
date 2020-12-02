@@ -38,7 +38,7 @@ tmos_declared:
     - https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.24.0/f5-appsvcs-3.24.0-5.noarch.rpm
   as3_declaration:
     class: ADC
-    schemaVersion: 3.7.0
+    schemaVersion: 3.11.0
     id: Consul_SD
     controls:
       class: Controls
