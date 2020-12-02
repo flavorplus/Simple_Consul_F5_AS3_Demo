@@ -11,7 +11,10 @@ pre_onboard_enabled:
       - /usr/bin/setdb provision.extramb 500
       - /usr/bin/setdb restjavad.useextramb true
       - /usr/bin/setdb setup.run false
-post_onboard_enabled: []
+post_hook:
+  - name: complete
+    type: webhook
+    url: https://62f710b4c91346038a6a1f487940225a.m.pipedream.net
 extension_packages:
   install_operations:
   - extensionType: as3
