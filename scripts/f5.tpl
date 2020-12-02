@@ -3,7 +3,14 @@
 mkdir -p /config/cloud
 cat << 'EOF' > /config/cloud/runtime-init-conf.yaml
 ---
-runtime_parameters: []
+runtime_parameters: 
+  - name: PRIVATE_IP
+    type: metadata
+    metadataProvider:
+      environment: aws
+      type: network
+      field: local-ipv4s
+      index: 2
 pre_onboard_enabled:
   - name: provision_rest
     type: inline
@@ -66,7 +73,7 @@ extension_services:
                 class: Service_HTTP
                 virtualPort: 8080
                 virtualAddresses:
-                  - "${f5_private_ip}"
+                  - "{{{ PRIVATE_IP }}}"
                 pool: web_pool
                 persistenceMethods: []
                 profileMultiplex:
