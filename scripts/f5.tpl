@@ -63,7 +63,7 @@ extension_services:
                 class: Service_HTTP
                 virtualPort: 8080
                 virtualAddresses:
-                  - "${f5_public_ip}"
+                  - "${f5_private_ip}"
                 pool: web_pool
                 persistenceMethods: []
                 profileMultiplex:
