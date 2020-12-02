@@ -1,16 +1,12 @@
 #!/bin/bash
 
+#Get IP
+local_ipv4="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
+
 mkdir -p /config/cloud
 cat << 'EOF' > /config/cloud/runtime-init-conf.yaml
 ---
-runtime_parameters: 
-  - name: PRIVATE_IP
-    type: metadata
-    metadataProvider:
-      environment: aws
-      type: network
-      field: local-ipv4s
-      index: 2
+runtime_parameters: []
 pre_onboard_enabled:
   - name: provision_rest
     type: inline
@@ -73,7 +69,7 @@ extension_services:
                 class: Service_HTTP
                 virtualPort: 8080
                 virtualAddresses:
-                  - "{{{ PRIVATE_IP }}}"
+                  - "${local_ipv4}"
                 pool: web_pool
                 persistenceMethods: []
                 profileMultiplex:
